@@ -2,7 +2,6 @@ import requests
 
 
 def app(environ, start_response):
-    print(environ)
     wsgi_input = environ.get("wsgi.input")
     req_data = None
     if wsgi_input:
@@ -13,7 +12,7 @@ def app(environ, start_response):
             req_headers[k[5:]] = v
     req = requests.Request(
         environ.get("REQUEST_METHOD"),
-        environ.get("REQUEST_URI").split("?", 1)[1],
+        environ.get("RAW_URI").split("?", 1)[1],
         data=req_data,
         headers=req_headers,
     )
