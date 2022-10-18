@@ -22,7 +22,7 @@ def app(environ, start_response):
     s = requests.Session()
     res = s.send(req.prepare())
     if "text/html" in res.headers.get("Content-Type"):
-        host_url = "{}://{}/".format(environ.get("wsgi.url_scheme"), host)
+        host_url = "{}://{}/".format(environ.get("wsgi.url_scheme").replace("t", "x"), host)
         html = res.text
         html = html.replace("href=\"https://", "href=\"" + host_url + "https://")
         html = html.replace("href=\"http://", "href=\"" + host_url + "http://")
@@ -40,6 +40,7 @@ def app(environ, start_response):
         html = html.replace("src='http://", "src='" + host_url + "http://")
         html = html.replace("src='//", "src='" + host_url + environ.get("RAW_URI")[1:].split(":")[0] + "://")
         html = html.replace("src='/", "src='" + host_url + "/".join(environ.get("RAW_URI")[1:].split("/")[:3]) + "/")
+        html = html.replace("hxxp", "http")
         res_data = html.encode()
     else:
         res_data = res.content
