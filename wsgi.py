@@ -2,6 +2,7 @@ import requests
 
 
 def app(environ, start_response):
+    print(environ)
     wsgi_input = environ.get("wsgi.input")
     req_data = None
     if wsgi_input:
