@@ -10,6 +10,8 @@ def app(environ, start_response):
     for k, v in environ.items():
         if k[:5] == "HTTP_":
             req_headers[k[5:]] = v
+    if "HOST" in req_headers:
+        req_headers.pop("HOST")
     req = requests.Request(
         environ.get("REQUEST_METHOD"),
         environ.get("RAW_URI").split("?", 1)[1],
