@@ -14,7 +14,7 @@ def app(environ, start_response):
         req_headers.pop("HOST")
     req = requests.Request(
         environ.get("REQUEST_METHOD"),
-        environ.get("RAW_URI").split("?", 1)[1],
+        environ.get("RAW_URI")[1:],
         data=req_data,
         headers=req_headers,
     )
