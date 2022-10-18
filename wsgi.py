@@ -18,7 +18,8 @@ def app(environ, start_response):
     )
     s = requests.Session()
     res = s.send(req.prepare())
-    data = res.content
+    res_data = res.content
+    res_headers = [(k, v) for k, v in res.headers.items()]
     status = "{} {}".format(res.status_code, res.reason)
-    start_response(status, res.headers)
-    return [data]
+    start_response(status, res_headers)
+    return [res_data]
