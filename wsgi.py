@@ -21,7 +21,7 @@ def app(environ, start_response):
     )
     s = requests.Session()
     res = s.send(req.prepare())
-    if res.headers.get("Content-Type") == "text/html":
+    if "text/html" in res.headers.get("Content-Type"):
         host_url = "{}://{}/".format(environ.get("wsgi.url_scheme"), host)
         html = res.text
         html = html.replace("href=\"https://", "href=\"" + host_url + "https://")
